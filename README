@@ -1,4 +1,4 @@
-$Id: README,v 1.2 2003/06/06 14:43:02 ian Exp $
+$Id: README,v 1.3 2003/06/15 23:46:36 ian Exp $
 
 NAME
     Class::Declare::Attributes - Class::Declare method types using Perl
@@ -97,6 +97,36 @@ DESCRIPTION
     as long as you remember the context of your attributes, i.e. are they
     Perl-attributes, or class-/object-attributes, the distinction should be
     clear.
+
+  Attribute Modifiers
+    Class::Declare::Attributes supports the use of the class and instance
+    attribute modifiers defined by Class::Declare. These modifiers may be
+    imported into the current namespace by either explicitly listing the
+    modifier (rw and ro) or using one of the predefined tags: ":read-write",
+    ":read-only" and ":modifiers". For example:
+
+      use Class::Declare::Attributes qw( :read-only );
+
+    Note: The "magic" of Class::Declare::Attributes that defines the method
+    attributes is performed during the compilation of the module it is
+    "use"d in. To access the attribute modifiers, the "use base" approach
+    should be replaced with the more traditional:
+
+      use Class::Declare::Attributes qw( :modifiers );
+      use vars qw( @ISA );
+      @ISA = qw( Class::Declare::Attributes );
+
+    However, because Class::Declare::Attributes (or more precisely
+    Attribute::Handlers) operates before the execution phase, the assignment
+    to @ISA will occur too late to take effect (resulting in an invalid
+    attribute error). To prevent this error, and to bring the assignment to
+    @ISA forward in the module compilation/execution phase, the assignment
+    should be wrapped in a "BEGIN {}" block.
+
+      BEGIN { @ISA = qw( Class::Declare::Attributes ); }
+
+    For more information on class and instance attribute modifiers, please
+    refer to Class::Declare.
 
 CAVEATS
     Class::Declare::Attributes is distributed as a separate module to

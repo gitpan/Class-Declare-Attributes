@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-# $Id: Attributes.pm,v 1.5 2003/06/06 14:41:05 ian Exp $
+# $Id: Attributes.pm,v 1.7 2003/06/15 23:46:16 ian Exp $
 package Class::Declare::Attributes;
 
 use 5.006;	# this is needed to ensure Attribute::Handlers will work
@@ -8,11 +8,25 @@ use strict;
 use warnings;
 
 # this is an extension of Class::Declare
-use base qw( Class::Declare     );
-use vars qw( $VERSION $REVISION );
+use base qw( Class::Declare );
+use vars qw( $VERSION $REVISION @EXPORT_OK %EXPORT_TAGS );
 
-	$VERSION	= '0.01';
-	$REVISION	= '$Revision: 1.5 $';
+	$VERSION		= '0.02';
+	$REVISION		= '$Revision: 1.7 $';
+
+# need to copy the export symbols from Class::Declare
+# to permit Class::Declare::Attributes to provide attribute modifiers
+BEGIN {
+	@EXPORT_OK		= @Class::Declare::EXPORT_OK;
+	%EXPORT_TAGS	= %Class::Declare::EXPORT_TAGS;
+
+	# make sure we copy the globs as well
+	no strict 'refs';
+
+	foreach( @EXPORT_OK ) {
+		*{ __PACKAGE__ . '::' . $_ }	= *{ 'Class::Declare::' . $_ };
+	}
+}
 
 # OK, we're cheating a little here, and using lower-case attribute names,
 # which is a little poor form on our part (but it does make the code nicer
@@ -236,6 +250,37 @@ B<Class::Declare::declare()>. The clash in terminology is unfortunate,
 but as long as you remember the context of your attributes, i.e. are they
 Perl-attributes, or class-/object-attributes, the distinction should be clear.
 
+
+=head2 Attribute Modifiers
+
+B<Class::Declare::Attributes> supports the use of the class and instance
+attribute modifiers defined by B<Class::Declare>. These modifiers may be
+imported into the current namespace by either explicitly listing the modifier
+(B<rw> and B<ro>) or using one of the predefined tags: C<:read-write>,
+C<:read-only> and C<:modifiers>. For example:
+
+  use Class::Declare::Attributes qw( :read-only );
+
+B<Note:> The "magic" of B<Class::Declare::Attributes> that defines the method
+attributes is performed during the compilation of the module it is C<use>d
+in. To access the attribute modifiers, the C<use base> approach should be
+replaced with the more traditional:
+
+  use Class::Declare::Attributes qw( :modifiers );
+  use vars qw( @ISA );
+  @ISA = qw( Class::Declare::Attributes );
+
+However, because B<Class::Declare::Attributes> (or more precisely
+L<Attribute::Handlers>) operates before the execution phase, the assignment to
+C<@ISA> will occur too late to take effect (resulting in an invalid attribute
+error). To prevent this error, and to bring the assignment to C<@ISA> forward
+in the module compilation/execution phase, the assignment should be wrapped
+in a C<BEGIN {}> block.
+
+  BEGIN { @ISA = qw( Class::Declare::Attributes ); }
+
+For more information on class and instance attribute modifiers, please refer
+to L<Class::Declare>.
 
 =head1 CAVEATS
 

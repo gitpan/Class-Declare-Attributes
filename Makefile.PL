@@ -1,4 +1,4 @@
-# $Id: Makefile.PL,v 1.3 2003/06/06 14:37:56 ian Exp $
+# $Id: Makefile.PL,v 1.4 2003/06/15 23:44:25 ian Exp $
 #
 # Makefile.PL for Class::Declare::Attributes
 #
@@ -12,7 +12,7 @@ WriteMakefile(
     'VERSION_FROM'	=> 'Attributes.pm',
 	# need Class::Declare v0.02 or later as this supports "restricted"
 	# methods and attributes rather than "shared"
-    'PREREQ_PM'   	=> { 'Class::Declare'      => 0.02 ,
+    'PREREQ_PM'   	=> { 'Class::Declare'      => 0.03 ,
 	              	     'Attribute::Handlers' => 0    ,
 	              	     'Test::More'          => 0    ,
 	              	     'Test::Exception'     => 0    } ,
