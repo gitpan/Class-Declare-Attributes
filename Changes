@@ -1,0 +1,5 @@
+Revision history for Perl module Class::Declare::Attributes
+# $Id: Changes,v 1.2 2003/06/06 14:43:49 ian Exp $
+
+0.01	Fri Jun  6 14:43:20 2003
+	- initial Class::Declare::Attributes release
