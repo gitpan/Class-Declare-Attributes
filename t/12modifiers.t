@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-# $Id: 12modifiers.t,v 1.1 2003/06/15 23:42:40 ian Exp $
+# $Id: 12modifiers.t,v 1.1 2003-06-15 23:42:40 ian Exp $
 
 # modifiers.t
 #

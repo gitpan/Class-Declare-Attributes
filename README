@@ -1,5 +1,3 @@
-$Id: README,v 1.3 2003/06/15 23:46:36 ian Exp $
-
 NAME
     Class::Declare::Attributes - Class::Declare method types using Perl
     attributes.
@@ -20,6 +18,7 @@ SYNOPSIS
       # declare class/static/restricted/etc methods of this package
       #
 
+      sub my_abstract   : abstract   { ... }
       sub my_class      : class      { ... }
       sub my_static     : static     { ... }
       sub my_restricted : restricted { ... }
@@ -31,7 +30,8 @@ DESCRIPTION
     Class::Declare::Attributes extends Class::Declare by adding support for
     Perl attributes for specifying class method types. This extension was
     inspired by Damian Conway's Attribute::Handlers module, and Tatsuhiko
-    Miyagawa's Attribute::Protected module.
+    Miyagawa's Attribute::Protected module. The original implementation used
+    Attribute::Handlers, but now simply refers to attributes.
 
     The addition of Perl attribute support (not to be confused with object
     attributes, which are entirely different, and also supported by
@@ -61,6 +61,11 @@ DESCRIPTION
     Class::Declare::Attributes defines six method or subroutine attributes
     that correspond to the six method and object- and class-attribute types
     of Class::Declare:
+
+    :abstract
+        abstract methods are merely placeholders and must be defined in
+        subclasses. If called, an abstract method will throw an error
+        through *die()*.
 
     :class
         class methods are accessible from anywhere, and may be called
@@ -128,11 +133,36 @@ DESCRIPTION
     For more information on class and instance attribute modifiers, please
     refer to Class::Declare.
 
+  Methods
+    require( *class* )
+        In the event that a Class::Declare::Attributes-derived class needs
+        to be loaded dynamically, the require() method should be used to
+        ensure correct handling of the Class::Declare::Attributes-style
+        attributes. require() is a class method of
+        Class::Declare::Attributes and should therefore be called along the
+        lines of the following:
+
+          package My::Class;
+
+          use strict;
+          use warnings;
+
+          use bae qw( Class::Declare::Attributes );
+
+          ...
+
+              my $class   = 'My::Class::To::Load';
+                 __PACKAGE__->require( $class )    or die;
+
+        *$class* can be either a class name (as above) or a string
+        containing the definition of the class. require() will return true
+        on success and undefined on failure, with $@ containing the error.
+
 CAVEATS
     Class::Declare::Attributes is distributed as a separate module to
     Class::Declare as it requires Perl versions 5.6.0 and greater, while
     Class::Declare supports all object-aware versions of Perl (i.e. version
-    5.0 and above). This is a necessary requirement of Attribute::Handlers.
+    5.0 and above).
 
     The interface Class::Declare::Attributes provides is not ideal. In fact,
     some might suggest that it's 'illegal'. In some ways, yes, it is
@@ -147,13 +177,13 @@ CAVEATS
     sort of capabilities we'll see in Perl 6.
 
 SEE ALSO
-    Class::Declare, Attribute::Handlers, Attribute::Protected.
+    Class::Declare, attributes, Attribute::Protected, Attribute::Handlers.
 
 AUTHOR
     Ian Brayshaw, <ian@onemore.org>
 
 COPYRIGHT AND LICENSE
-    Copyright 2003 by Ian Brayshaw. All rights reserved.
+    Copyright 2003-2007 by Ian Brayshaw. All rights reserved.
 
     This library is free software; you can redistribute it and/or modify it
     under the same terms as Perl itself.

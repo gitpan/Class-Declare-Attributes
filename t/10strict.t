@@ -1,5 +1,5 @@
 #!/usr/bin/perl -Tw
-# $Id: 10strict.t,v 1.4 2003/06/06 14:35:45 ian Exp $
+# $Id: 10strict.t,v 1.5 2007-03-05 17:52:35 ian Exp $
 
 # strict.t
 #
@@ -59,9 +59,9 @@ foreach my $context ( @contexts ) {
 # run the class method tests
 foreach my $type ( qw( class static restricted ) ) {
 	# create the test object
-	my	$test	= Class::Declare::Attributes::Test->new( type   =>  $type   ,
-	  	     	                                         tests  => \@ctests ,
-	  	     	                                         strict => 0        );
+	my	$test	= Class::Declare::Attributes::Test->new( type  =>  $type   ,
+	  	     	                                         tests => \@ctests ,
+	  	     	                                         check => 0        );
 	# run the tests
 		$test->run;
 }
@@ -69,9 +69,132 @@ foreach my $type ( qw( class static restricted ) ) {
 # run the instance method tests
 foreach my $type ( qw( public private protected ) ) {
 	# create the test object
-	my	$test	= Class::Declare::Attributes::Test->new( type   =>  $type   ,
-	  	     	                                         tests  => \@itests ,
-	  	     	                                         strict => 0        );
+	my	$test	= Class::Declare::Attributes::Test->new( type  =>  $type   ,
+	  	     	                                         tests => \@itests ,
+	  	     	                                         check => 0        );
 	# run the tests
 		$test->run;
 }
+
+
+# Declare Class::Declare-derived packages to test the return value of strict()
+package Test::Strict::Undef;
+use base qw( Class::Declare::Attributes );
+__PACKAGE__->declare( strict => undef );
+sub unused : class;
+1;
+
+package Test::Strict::One;
+use base qw( Class::Declare::Attributes );
+__PACKAGE__->declare( strict => 1       );
+sub unused : class;
+1;
+
+package Test::Strict::Zero;
+use base qw( Class::Declare::Attributes );
+__PACKAGE__->declare( strict => 0       );
+sub unused : class;
+1;
+
+
+# Declare inherited classes for testing strict()
+package Test::Strict::Inherit::Undef;
+use base qw( Test::Strict::Undef );
+sub unused : class;
+1;
+
+package Test::Strict::Inherit::One;
+use base qw( Test::Strict::One );
+sub unused : class;
+1;
+
+package Test::Strict::Inherit::Zero;
+use base qw( Test::Strict::Zero );
+sub unused : class;
+1;
+
+
+# Declare override classes for testing strict()
+package Test::Strict::One::Zero;
+use base qw( Test::Strict::One );
+__PACKAGE__->declare( strict => 0 );
+sub unused : class;
+1;
+
+package Test::Strict::Zero::One;
+use base qw( Test::Strict::Zero );
+__PACKAGE__->declare( strict => 1 );
+sub unused : class;
+1;
+
+package Test::Strict::Zero::Undef;
+use base qw( Test::Strict::Zero );
+__PACKAGE__->declare( strict => undef );
+sub unused : class;
+1;
+
+package Test::Strict::One::Undef;
+use base qw( Test::Strict::One );
+__PACKAGE__->declare( strict => undef );
+sub unused : class;
+1;
+
+
+
+package main;
+
+use Test::More;
+
+# ensure strict() returns true for ::Undef and ::One but not ::Zero
+#   - class access
+ok(   Test::Strict::Undef->strict , 'strict() correct for class undef' );
+ok(   Test::Strict::One->strict   , 'strict() correct for class one'   );
+ok( ! Test::Strict::Zero->strict  , 'strict() correct for class zero'  );
+
+#   - instance access
+my  $undef = Test::Strict::Undef->new;
+my  $one   = Test::Strict::One->new;
+my  $zero  = Test::Strict::Zero->new;
+
+ok(   $undef->strict , 'strict() correct for instance undef' );
+ok(   $one->strict   , 'strict() correct for instance one'   );
+ok( ! $zero->strict  , 'strict() correct for instance zero'  );
+
+#   - inherited class access
+ok(   Test::Strict::Inherit::Undef->strict     ,
+    'inherit strict() correct for class undef' );
+ok(   Test::Strict::Inherit::One->strict       ,
+    'inherit strict() correct for class one'   );
+ok( ! Test::Strict::Inherit::Zero->strict      ,
+    'inherit strict() correct for class zero'  );
+
+#   - inherited instance access
+    $undef = Test::Strict::Undef->new;
+    $one   = Test::Strict::One->new;
+    $zero  = Test::Strict::Zero->new;
+
+ok(   $undef->strict , 'strict() correct for inherited instance undef' );
+ok(   $one->strict   , 'strict() correct for inherited instance one'   );
+ok( ! $zero->strict  , 'strict() correct for inherited instance zero'  );
+
+#   - inherited class access
+ok( ! Test::Strict::One::Zero->strict    ,
+    'override strict() correct for class 1-0'  );
+ok(   Test::Strict::Zero::One->strict    ,
+    'override strict() correct for class 0-1'  );
+ok( ! Test::Strict::Zero::Undef->strict  ,
+    'override strict() correct for class zero' );
+ok(   Test::Strict::One::Undef->strict   ,
+    'override strict() correct for class one'  );
+
+#   - inherited instance access
+    $one   = Test::Strict::One::Zero->new;
+    $zero  = Test::Strict::Zero::One->new;
+    $undef = Test::Strict::Zero::Undef->new;
+my  $obj   = Test::Strict::One::Undef->new;
+
+ok( ! $one->strict   , 'strict() correct for override instance 1-0'  );
+ok(   $zero->strict  , 'strict() correct for override instance 0-1'  );
+ok( ! $undef->strict , 'strict() correct for override instance zero' );
+ok(   $obj->strict   , 'strict() correct for override instance one'  );
+

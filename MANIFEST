@@ -4,12 +4,6 @@ Makefile.PL
 MANIFEST
 README
 t/Class/Declare/Attributes/Test.pm
-t/Class/Declare/Attributes/Test/Class.pm
-t/Class/Declare/Attributes/Test/Static.pm
-t/Class/Declare/Attributes/Test/Restricted.pm
-t/Class/Declare/Attributes/Test/Public.pm
-t/Class/Declare/Attributes/Test/Private.pm
-t/Class/Declare/Attributes/Test/Protected.pm
 t/Class/Declare/Attributes/Multi/One.pm
 t/Class/Declare/Attributes/Multi/Two.pm
 t/Class/Declare/Attributes/Multi/Three.pm
@@ -27,3 +21,5 @@ t/11export.t
 t/12modifiers.t
 t/13readonly.t
 t/14readwrite.t
+t/15abstract.t
+META.yml                                 Module meta-data (added by MakeMaker)

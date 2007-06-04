@@ -1,5 +1,5 @@
 #!/usr/bin/perl -Tw
-# $Id: 04static.t,v 1.3 2003/06/05 18:43:18 ian Exp $
+# $Id: 04static.t,v 1.4 2007-03-05 17:43:01 ian Exp $
 
 # static.t
 #
@@ -23,16 +23,22 @@ my	@tests;		undef @tests;
 
 # first, define all the tests that will succeed: called from within the
 # defining class and it's instances.
-my	@contexts	= ( CTX_CLASS ,               CTX_INSTANCE                 );
-my	@targets	= ( TGT_CLASS , TGT_DERIVED , TGT_INSTANCE , TGT_INHERITED );
+my	@contexts	= ( CTX_CLASS  ,               CTX_INSTANCE                 ,
+                  CTX_PARENT , CTX_SUPER                                  );
+my	@targets	= ( TGT_CLASS  , TGT_DERIVED , TGT_INSTANCE , TGT_INHERITED );
 
 # add the method tests
 #   - methods should be accessible and readable
 foreach my $target ( @targets ) {
 	foreach my $context ( @contexts ) {
+		# add the attribute tests
+		push @tests , ( $context | $target | ATTRIBUTE | TST_ACCESS | LIVE ,
+		                $context | $target | ATTRIBUTE | TST_READ   | LIVE ,
+		                $context | $target | ATTRIBUTE | TST_WRITE  | DIE  );
+
 		# add the method tests
-		push @tests , ( $context | $target | TST_ACCESS | LIVE ,
-		                $context | $target | TST_READ   | LIVE );
+		push @tests , ( $context | $target | METHOD    | TST_ACCESS | LIVE ,
+		                $context | $target | METHOD    | TST_READ   | LIVE );
 	}
 }
 
@@ -42,7 +48,8 @@ foreach my $target ( @targets ) {
 foreach my $target ( @targets ) {
 	foreach my $context ( @contexts ) {
 		# add the method tests
-		push @tests , ( $context | $target | TST_ALL    | DIE );
+		push @tests , ( $context | $target | ATTRIBUTE | TST_ALL    | DIE ,
+		                $context | $target | METHOD    | TST_ALL    | DIE );
 	}
 }
 

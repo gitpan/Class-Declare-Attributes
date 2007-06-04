@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $Id: 13readonly.t,v 1.1 2003/06/15 23:42:40 ian Exp $
+# $Id: 13readonly.t,v 1.1 2003-06-15 23:42:40 ian Exp $
 
 # readonly.t
 #

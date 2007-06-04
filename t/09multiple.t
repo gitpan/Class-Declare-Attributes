@@ -1,5 +1,5 @@
 #!/usr/bin/perl -Tw
-# $Id: 09multiple.t,v 1.2 2003/06/06 09:33:02 ian Exp $
+# $Id: 09multiple.t,v 1.2 2003-06-06 09:33:02 ian Exp $
 
 # multiple.t
 #
