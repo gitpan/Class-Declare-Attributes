@@ -1,4 +1,4 @@
-# $Id: Makefile.PL,v 1.7 2008-06-06 14:03:44 ian Exp $
+# $Id: Makefile.PL,v 1.8 2008-06-06 14:16:29 ian Exp $
 #
 # Makefile.PL for Class::Declare::Attributes
 #
@@ -9,7 +9,7 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile(
   'NAME'          => 'Class::Declare::Attributes',
-  'VERSION'       => '0.05',  # we're now ahead of the module version
+  'VERSION_FROM'  => 'Attributes.pm',
   'PREREQ_PM'     => { 'Class::Declare'  => 0.06 ,
                        'Test::More'      => 0    ,
                        'Test::Exception' => 0.15 } , # for lives_and()

@@ -1,4 +1,4 @@
-# $Revision: 1.11 $
+# $Revision: 1.12 $
 package Class::Declare::Attributes;
 
 use 5.006;
@@ -11,8 +11,8 @@ use File::Spec::Functions       qw();
 use base qw( Class::Declare        );
 use vars qw( $VERSION $REVISION    );
 
-    $VERSION      = '0.04';
-    $REVISION     = '$Revision: 1.11 $';
+    $VERSION      = '0.06';
+    $REVISION     = '$Revision: 1.12 $';
 
 # need to copy the export symbols from Class::Declare
 # to permit Class::Declare::Attributes to provide attribute modifiers
