@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $Id: 02test.t,v 1.4 2003-06-06 14:35:45 ian Exp $
+# $Id: 02test.t,v 1.5 2008-06-06 14:03:44 ian Exp $
 
 # test.t
 #
@@ -9,10 +9,21 @@
 use strict;
 use lib       	qw( t );
 use Test::More;
-use Test::Exception;
 
 # make sure Class::Declare::Attribute::Test compiles
 BEGIN{ use_ok( 'Class::Declare::Attributes::Test' ) }
+
+# This Is Bad(tm)
+#   - changes somewhere in Perl mean that the first test below
+#     fails if Test::Exception is included *before* the use_ok()
+#     test above
+#   - the error is within Carp::Heavy and appears to be the result
+#     Perl getting lost in its handling of the stack
+#   - not a lot of mention of it online, so it's not a common bug
+#   - example error:
+#         Bizarre copy of ARRAY in sassign at 
+#             /usr/share/perl/5.10/Carp/Heavy.pm line 96
+use Test::Exception;
 
 # create test instances to ensure they can be created
 #    NB: we'll use an empty set of tests
