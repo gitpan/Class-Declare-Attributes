@@ -1,4 +1,4 @@
-# $Revision: 1.12 $
+# $Revision: 1.13 $
 package Class::Declare::Attributes;
 
 use 5.006;
@@ -11,8 +11,8 @@ use File::Spec::Functions       qw();
 use base qw( Class::Declare        );
 use vars qw( $VERSION $REVISION    );
 
-    $VERSION      = '0.06';
-    $REVISION     = '$Revision: 1.12 $';
+    $VERSION      = '0.07';
+    $REVISION     = '$Revision: 1.13 $';
 
 # need to copy the export symbols from Class::Declare
 # to permit Class::Declare::Attributes to provide attribute modifiers
@@ -166,6 +166,10 @@ sub __init__
     # iterate through the symbol tree of this package
     while ( my ( $name , $sym ) = each %{ $pkg . '::' } ) {
       no warnings 'once';
+
+      # if we don't have a normal symbol table entry, then skip
+      #   - occasionally we will find a reference here not a GLOB
+               ( ref $sym )                 and next;
 
       # if we don't have a CODE reference then we can't proceed
       my  $ref  = *{ $sym }{ CODE }           or next;

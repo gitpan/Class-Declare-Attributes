@@ -1,4 +1,4 @@
-# $Id: Makefile.PL,v 1.8 2008-06-06 14:16:29 ian Exp $
+# $Id: Makefile.PL,v 1.9 2008-07-07 00:11:42 ian Exp $
 #
 # Makefile.PL for Class::Declare::Attributes
 #
