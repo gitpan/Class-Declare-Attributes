@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $Id: 02test.t,v 1.5 2008-06-06 14:03:44 ian Exp $
+# $Id: 02test.t 1515 2010-08-22 14:41:53Z ian $
 
 # test.t
 #

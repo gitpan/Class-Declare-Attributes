@@ -1,4 +1,4 @@
-# $Revision: 1.13 $
+# $Revision: 1515 $
 package Class::Declare::Attributes;
 
 use 5.006;
@@ -11,8 +11,8 @@ use File::Spec::Functions       qw();
 use base qw( Class::Declare        );
 use vars qw( $VERSION $REVISION    );
 
-    $VERSION      = '0.07';
-    $REVISION     = '$Revision: 1.13 $';
+    $VERSION      = '0.08';
+    $REVISION     = '$Revision: 1515 $';
 
 # need to copy the export symbols from Class::Declare
 # to permit Class::Declare::Attributes to provide attribute modifiers
@@ -31,10 +31,6 @@ BEGIN {
                                       public
                                       protected
                                       private    );
-
-  # class-level attributes (class, restricted and static) should me marked
-  # with 'locked' since they implement a singleton
-  my  %__LOCK__ = map { $_ => 1 } qw( class restricted static );
 
   # suppress the warnings surrounding the use of attributes that may be
   # reserved for future use
@@ -102,11 +98,6 @@ sub MODIFY_CODE_ATTRIBUTES
     #   - each code reference assigned a Class::Declare::Attributes interface
     #     is also actually a method
             attributes::->import( CORE => $ref => 'method' );
-
-    # if this method is a class-level method, then it should be 'locked' as
-    # well
-    ( $__LOCK__{ $attr } )
-        and attributes::->import( CORE => $ref => 'locked' );
   }
 
   # if we have any unknown attributes, then return them
@@ -467,7 +458,7 @@ Ian Brayshaw, E<lt>ian@onemore.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2003-2007 by Ian Brayshaw. All rights reserved.
+Copyright 2003-2010 by Ian Brayshaw. All rights reserved.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

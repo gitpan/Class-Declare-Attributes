@@ -1,8 +1,8 @@
-# $Id: Makefile.PL,v 1.9 2008-07-07 00:11:42 ian Exp $
+# $Id: Makefile.PL 1515 2010-08-22 14:41:53Z ian $
 #
 # Makefile.PL for Class::Declare::Attributes
 #
-# Copyright (c) 2003-2007 Ian Brayshaw <ian@onemore.org>
+# Copyright (c) 2003-2010 Ian Brayshaw <ian@onemore.org>
 
 use 5.006;
 use ExtUtils::MakeMaker;

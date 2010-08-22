@@ -1,5 +1,5 @@
 #!/usr/bin/perl -Tw
-# $Id: 01compile.t,v 1.1 2003-06-05 05:49:47 ian Exp $
+# $Id: 01compile.t 1515 2010-08-22 14:41:53Z ian $
 
 # compile.t
 #

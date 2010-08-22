@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-# $Id: Test.pm,v 1.6 2007-03-06 10:26:59 ian Exp $
+# $Id: Test.pm 1515 2010-08-22 14:41:53Z ian $
 
 # generate and execute access permutations
 package Class::Declare::Attributes::Test;
@@ -9,7 +9,7 @@ use File::Spec::Functions;
 
 use base qw( Class::Declare::Attributes );
 use vars qw( $REVISION $VERSION );
-             $REVISION	= '$Revision: 1.6 $';
+             $REVISION	= '$Revision: 1515 $';
              $VERSION   = '0.02';
 
 =head1 NAME

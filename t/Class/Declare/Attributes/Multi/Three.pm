@@ -1,6 +1,6 @@
 #!/usr/bin/perl -Tw
 
-# $Id: Three.pm,v 1.1 2003-06-06 09:31:25 ian Exp $
+# $Id: Three.pm 1515 2010-08-22 14:41:53Z ian $
 # Helper class for multiple inheritance test
 #    - unlike Class::Declare, Class::Declare::Attributes doesn't support
 #      on-the-fly generation of modules (Attributes::Handlers is unable to

@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $Id: 14readwrite.t,v 1.1 2003-06-15 23:42:40 ian Exp $
+# $Id: 14readwrite.t 1515 2010-08-22 14:41:53Z ian $
 
 # readwrite.t
 #

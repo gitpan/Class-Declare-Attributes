@@ -1,5 +1,5 @@
 #!/usr/bin/perl -Tw
-# $Id: 04static.t,v 1.4 2007-03-05 17:43:01 ian Exp $
+# $Id: 04static.t 1515 2010-08-22 14:41:53Z ian $
 
 # static.t
 #

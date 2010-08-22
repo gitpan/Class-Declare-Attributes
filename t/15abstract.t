@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-# $Revision: 1.1 $
+# $Revision: 1515 $
 
 # abstract.t
 #

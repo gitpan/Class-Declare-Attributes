@@ -2,6 +2,7 @@ Attributes.pm
 Changes
 Makefile.PL
 MANIFEST
+META.yml
 README
 t/Class/Declare/Attributes/Test.pm
 t/Class/Declare/Attributes/Multi/One.pm
@@ -22,4 +23,3 @@ t/12modifiers.t
 t/13readonly.t
 t/14readwrite.t
 t/15abstract.t
-META.yml                                 Module meta-data (added by MakeMaker)
